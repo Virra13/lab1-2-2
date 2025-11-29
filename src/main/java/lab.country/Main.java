@@ -16,13 +16,10 @@ public class Main {
     private static final String NO = "n";
 
     private static final Scanner SCANNER = new Scanner(System.in);
-    CountryRespository respository = new CountryRespository();
-    Country found = respository.findCountryByName(name);
-
 
     public static void main(String[] args) {
 
-
+        CountryRepository repository = new CountryRepository();
 
         try {
 
@@ -82,7 +79,7 @@ public class Main {
                         }
 
                         String answer;
-                        Country newCountry;
+                        Country newCountry = null;
 
                         while (true) {
                             System.out.println("Есть ли столица? (y/n):");
@@ -129,27 +126,21 @@ public class Main {
                             break;
                         }
 
-                        if (index >= countries.length) {
-                            countries = extendArray(countries);
-                        }
-
-                        countries[index] = newCountry;
-
+                        repository.add(newCountry);
                         System.out.println("Страна добавлена: " + newCountry.getName());
-                        index++;
                         break;
 
                     case COMMAND_PRINT:
-                        printAll(countries);
+                        repository.printAll();
                         break;
+
 
                     case COMMAND_DENSITY:
                         String nameDensity;
                         System.out.println("Введите название страны:");
                         nameDensity = readInput();
 
-                        Country found = findCountryByName(nameDensity);
-
+                        Country found = repository.findCountryByName(nameDensity);
                         if (found == null) {
                             System.out.println("Страна с таким именем не найдена.");
                             break;
@@ -175,27 +166,6 @@ public class Main {
     }
 
     /**
-     * Выводит в консоль информацию о всех непустых элементах массива стран.
-     *
-     * @param countries массив объектов Country для печати.
-     */
-
-    public static void printAll(Country[] countries) {
-
-        if (countries == null || countries.length == 0) {
-            return;
-        }
-
-        for (Country c : countries) {
-            if (c != null) {
-                System.out.println(c);
-                System.out.println();
-            }
-        }
-    }
-
-
-    /**
      * Считывает строку, введённую пользователем, и проверяет команду выхода.
      * Если пользователь ввёл "exit", возбуждается исключение ExitException.
      *
@@ -211,6 +181,6 @@ public class Main {
         return input;
     }
 
-class ExitException extends RuntimeException {
+static class ExitException extends RuntimeException {
 }
 }

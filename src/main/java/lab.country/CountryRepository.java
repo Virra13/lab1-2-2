@@ -1,6 +1,6 @@
 package lab.country;
 
-public class CountryRespository {
+public class CountryRepository {
 
 
     private static final int INITIAL_CAPACITY = 10;
@@ -8,10 +8,10 @@ public class CountryRespository {
     private Country[] countries;
     private int size;
 
-    public CountryRespository() {
+    public CountryRepository() {
 
         countries = new Country[INITIAL_CAPACITY];
-        size = 5;
+        this.size = 5;
 
         // Инициализация тестовых данных
         countries[0] = new Country("Russia", 17100000, 146700000, "Moscow", 12600000);
@@ -25,8 +25,6 @@ public class CountryRespository {
      * Увеличивает размер массива стран, копирует все элементы
      * в новый массив, размер которого в два раза больше.
      *
-     * @param oldArray исходный массив
-     * @return новый расширенный массив
      */
 
     public void extendArray() {
@@ -52,5 +50,22 @@ public class CountryRespository {
         }
         return null;
     }
+
+
+    public void add(Country country) {
+        if (size == countries.length) {
+            extendArray();
+        }
+        countries [size] = country;
+        size++;
+    }
+
+    public void printAll() {
+        for (int i = 0; i < size; i++)  {
+            System.out.println(countries[i]);
+            System.out.println();
+        }
+    }
+
 }
-}
+
